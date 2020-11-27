@@ -1,2 +1,9 @@
-﻿  Source.cpp
+﻿  main.cpp
+D:\_Kuliah\Struktur Data\ProjectTyperShark\ProjectTyperShark\ProjectTyperShark\main.cpp(9,12): warning C4244:  'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  MainMenuState.cpp
+D:\_Kuliah\Struktur Data\ProjectTyperShark\ProjectTyperShark\ProjectTyperShark\main.cpp(29,20): warning C4018:  '<': signed/unsigned mismatch
+D:\_Kuliah\Struktur Data\ProjectTyperShark\ProjectTyperShark\ProjectTyperShark\MainMenuState.cpp(44,122): warning C4244:  'argument': conversion from 'double' to 'float', possible loss of data
+  SplashState.cpp
+  Generating Code...
+D:\_Kuliah\Struktur Data\ProjectTyperShark\ProjectTyperShark\ProjectTyperShark\MainMenuState.cpp(60,105): warning C4244:  'argument': conversion from 'double' to 'float', possible loss of data
   ProjectTyperShark.vcxproj -> D:\_Kuliah\Struktur Data\ProjectTyperShark\ProjectTyperShark\Debug\ProjectTyperShark.exe
