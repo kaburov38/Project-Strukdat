@@ -95,7 +95,7 @@ void MainMenuState::Input(sf::RenderWindow& _window, sf::Event& _event, std::vec
 		if (IsTextClicked(_play, sf::Mouse::Left, _window))
 		{
 			_music.stop();
-			_state.push_back(new MainMenuState);
+			_state.push_back(new GameState);
 			_state.back()->Init(_window);
 		}
 		if (IsTextClicked(_tutorial, sf::Mouse::Left, _window))
