@@ -1,6 +1,6 @@
 #pragma once
-#define Splash_State_BG_Filepath "Resources/SplashState.png"
-#define Main_Menu_State_BG_Filepath "Resources/MainMenu.jpg"
+#define Splash_State_BG_Filepath "Resources/bg-menu.png"
+#define Main_Menu_State_BG_Filepath "Resources/bg-menu.png"
 #define Game_Menu_State_BG_Filepath "Resources/GameState.png"
 #define Main_Menu_Font_Filepath "Resources/Fonts/SeasideResortNF.ttf"
 #define Splash_Time 2

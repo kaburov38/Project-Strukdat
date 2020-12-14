@@ -28,7 +28,7 @@ void MainMenuState::Init(sf::RenderWindow& _window)
 		std::cout << "Failed to Open Font" << std::endl;
 	}
 	_title.setFont(_font);
-	_title.setString("Last Fish Standing");
+	_title.setString("Typer Shark");
 	_title.setCharacterSize(75);
 	_title.setFillColor(sf::Color(255, 255, 255, 255));
 	_title.setOutlineThickness(5);
@@ -68,7 +68,7 @@ void MainMenuState::Input(sf::RenderWindow& _window, sf::Event& _event, std::vec
 		{
 			_window.close();
 		}
-		/*if (IsTextHovered(_play, _window))
+		if (IsTextHovered(_play, _window))
 		{
 			_play.setFillColor(sf::Color(255, 255, 255, 150));
 		}
@@ -95,19 +95,19 @@ void MainMenuState::Input(sf::RenderWindow& _window, sf::Event& _event, std::vec
 		if (IsTextClicked(_play, sf::Mouse::Left, _window))
 		{
 			_music.stop();
-			_state.push_back(new GameState);
+			_state.push_back(new MainMenuState);
 			_state.back()->Init(_window);
 		}
 		if (IsTextClicked(_tutorial, sf::Mouse::Left, _window))
 		{
 			_music.stop();
-			_state.push_back(new TutorialState);
+			_state.push_back(new MainMenuState);
 			_state.back()->Init(_window);
 		}
 		if (IsTextClicked(_exit, sf::Mouse::Left, _window))
 		{
 			_window.close();
-		}*/
+		}
 	}
 }
 

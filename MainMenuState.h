@@ -3,6 +3,7 @@
 #include<SFML/Audio.hpp>
 #include "Definition.h"
 #include "State.h"
+#include "Additional.h"
 class MainMenuState : public State
 {
 public:
