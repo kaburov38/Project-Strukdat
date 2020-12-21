@@ -7,7 +7,7 @@
 int main()
 {
 	srand(time(NULL));
-	sf::RenderWindow _window(sf::VideoMode(1366, 768), "Last Fish Standing", sf::Style::Fullscreen);
+	sf::RenderWindow _window(sf::VideoMode(1366, 768), "Last Fish Standing" /*, sf::Style::Fullscreen*/);
 	std::vector<State*> _state;
 	_state.push_back(new SplashState);
 	_state.back()->Init(_window);

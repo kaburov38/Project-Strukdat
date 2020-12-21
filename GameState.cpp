@@ -1,6 +1,5 @@
 #include "GameState.h"
 #include<iostream>
-
 GameState::GameState()
 {
 }
@@ -23,21 +22,11 @@ void GameState::Init(sf::RenderWindow& _window)
 	{
 		std::cout << "Failed To Open File" << std::endl;
 	}
-	_hiu.setTexture(_hiu1);
-	_hiu.setScale(2, 2);
-	anim.Init(&_hiu1, sf::Vector2u(20, 1), 0.1f);	
-	if (!_font.loadFromFile(Main_Menu_Font_Filepath))
-	{
-		std::cout << "Failed to Open Font" << std::endl;
+	if (!_font.loadFromFile(Main_Menu_Font_Filepath)) {
+		std::cout << "Failed To Open File" << std::endl;
 	}
-	_string.setFont(_font);
-	_string.setString("Typer Shark");
-	_string.setCharacterSize(22);
-	_string.setFillColor(sf::Color(255, 255, 255, 255));
-	_string.setOutlineThickness(1);
-	_string.setOutlineColor(sf::Color::Black);
-	std::cout << _hiu.getGlobalBounds().width / 20 << " " << _hiu.getGlobalBounds().height;
-	_string.setPosition(_hiu.getPosition().x + _hiu.getGlobalBounds().width / 80, _hiu.getPosition().y + _hiu.getGlobalBounds().height / 2.75);
+	hiu.Init(_hiu1,_font,"abcdefhsa",1,1);
+	hiuu.Init(_hiu1, _font, "xxxxxxx", 1, 2);
 }
 
 void GameState::Input(sf::RenderWindow& _window, sf::Event& _event, std::vector<State*>& _state)
@@ -51,18 +40,16 @@ void GameState::Input(sf::RenderWindow& _window, sf::Event& _event, std::vector<
 	}
 }
 
-void GameState::Update(sf::RenderWindow& _window, std::vector<State*>& _state)
-{
-	deltatime = _animationtimer.restart().asSeconds();
-	anim.Update(0, deltatime);
-	_hiu.setTextureRect(anim.uvRect);
+void GameState::Update(sf::RenderWindow& _window, std::vector<State*>& _state) {
+	hiu.Update();
+	hiuu.Update();
 }
 
 void GameState::Draw(sf::RenderWindow& _window)
 {
 	_window.clear();
 	_window.draw(_sprite);
-	_window.draw(_hiu);
-	_window.draw(_string);
+	hiu.Draw(_window);
+	hiuu.Draw(_window);
 	_window.display();
 }

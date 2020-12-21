@@ -92,6 +92,7 @@ void MainMenuState::Input(sf::RenderWindow& _window, sf::Event& _event, std::vec
 		{
 			_exit.setFillColor(sf::Color(255, 255, 255, 255));
 		}
+		//CLICKED
 		if (IsTextClicked(_play, sf::Mouse::Left, _window))
 		{
 			_music.stop();

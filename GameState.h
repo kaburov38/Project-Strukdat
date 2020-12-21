@@ -4,6 +4,7 @@
 #include "State.h"
 #include "MainMenuState.h"
 #include "Animation.h"
+#include "Shark.h"
 class GameState : public State
 {
 public:
@@ -23,5 +24,6 @@ private:
 	sf::Clock _animationtimer;
 	sf::Font _font;
 	sf::Text _string;
+	Shark hiu,hiuu;
 };
 
