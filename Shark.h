@@ -1,6 +1,5 @@
 #pragma once
 #include<SFML/Graphics.hpp>
-#include<fstream>
 #include "Definition.h"
 #include "Animation.h"
 #include <time.h>
@@ -22,4 +21,5 @@ public:
 	void Update();
 	void Draw(sf::RenderWindow& _window);
 	std::string getString();
+	void setString(std::string str);
 };

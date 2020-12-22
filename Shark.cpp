@@ -40,12 +40,21 @@ void Shark::Update()
 	datatime = clock.restart().asSeconds();
 	animation.Update(0, datatime);
 	body.setTextureRect(animation.uvRect);
-	body.move(-11*datatime, 0);
+	body.move(-30*datatime, 0);
 	text.setPosition((body.getPosition().x + body.getGlobalBounds().width / 2) - text.getGlobalBounds().width / 2, body.getPosition().y + body.getGlobalBounds().height / 2.75);
-	std::cout << text.getPosition().x << " ";
 }
 
 void Shark::Draw(sf::RenderWindow& _window) {
 	_window.draw(body);
 	_window.draw(text);
+}
+
+std::string Shark::getString()
+{
+	return word;
+}
+void Shark::setString(std::string str)
+{
+	word = str;
+	text.setString(word);
 }

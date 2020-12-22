@@ -2,6 +2,7 @@
 #define Splash_State_BG_Filepath "Resources/bg-menu.png"
 #define Main_Menu_State_BG_Filepath "Resources/bg-menu.png"
 #define Game_State_BG_Filepath "Resources/bg-play.png"
+#define Word_Bank "res/WordBank.txt"
 #define Main_Menu_Font_Filepath "Resources/Fonts/SeasideResortNF.ttf"
 #define Splash_Time 2
 #define Fish_Time 25

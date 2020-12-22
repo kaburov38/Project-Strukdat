@@ -3,6 +3,7 @@
 #include "Definition.h"
 #include "State.h"
 #include "MainMenuState.h"
+#include "linkedlist.h"
 #include "Animation.h"
 #include "Shark.h"
 class GameState : public State
@@ -21,9 +22,10 @@ private:
 	sf::Clock _clock;
 	Animation anim;
 	float deltatime = 0;
-	sf::Clock _animationtimer;
+	sf::Clock _animationtimer, _cooldown, _spawner;
 	sf::Font _font;
-	sf::Text _string;
-	Shark hiu,hiuu;
+	sf::Text _string, input_text;
+	linkedlist sharks;
+	std::string input_str;
 };
 

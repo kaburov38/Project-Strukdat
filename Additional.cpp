@@ -1,4 +1,5 @@
 #include "Additional.h"
+#include "Definition.h"
 
 bool IsTextHovered(sf::Text object, sf::RenderWindow& _window)
 {
@@ -42,4 +43,18 @@ bool IsSpriteClicked(sf::Sprite object, sf::Mouse::Button button, sf::RenderWind
 		}
 	}
 	return false;
+}
+std::string getSharkString()
+{
+	std::fstream file;
+	std::string word;
+	int line;
+	line = rand() % 16000 + 1;
+	file.open(Word_Bank);
+	for (int i = 0; i < line; i++)
+	{
+		getline(file, word);
+	}
+	file.close();
+	return word;
 }
