@@ -29,10 +29,6 @@ public:
 	void Draw(sf::RenderWindow& _window);
 	int getSize();
 	void Randomize();
-	Shark getShark(int index);
-	void reduceLives(int index);
-	bool Attack(std::string word);
-	bool isGameOver();
 
 private:
 	Node* head;

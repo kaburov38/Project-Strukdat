@@ -16,10 +16,9 @@ public:
 	void Input(sf::RenderWindow& _window, sf::Event& _event, std::vector<State*>& _state);
 	void Update(sf::RenderWindow& _window, std::vector<State*>& _state);
 	void Draw(sf::RenderWindow& _window);
-	void SpawnShark(int amount);
 private:
-	sf::Texture _texture, _hiu1, _hiu2;
-	sf::Sprite _sprite;
+	sf::Texture _texture, _hiu1;
+	sf::Sprite _sprite, _hiu;
 	sf::Clock _clock;
 	Animation anim;
 	float deltatime = 0;
