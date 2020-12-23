@@ -8,7 +8,7 @@
 #define Fish_Time 25
 #define Food_Interval 15
 #define Game_Over_Time 1.5
-#define Player_Sprite_Texture_Filepath "Resources/Player.png"
+#define Player_Sprite_Texture_Filepath "Resources/texture/diver.png"
 #define Game_Over_Texture_Filepath "Resources/GameOver.jpg"
 #define Enemy_1_Sprite_Texture_Filepath "Resources/texture/hiu1.png"
 #define Enemy_2_Sprite_Texture_Filepath "Resources/texture/hiu2.png"

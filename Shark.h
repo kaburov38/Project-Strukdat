@@ -25,4 +25,5 @@ public:
 	int getLives();
 	void reduceLives();
 	sf::Sprite GetSprite();
+	void death(sf::Texture& _texture);
 };

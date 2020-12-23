@@ -71,3 +71,10 @@ sf::Sprite Shark::GetSprite()
 {
 	return body;
 }
+
+void Shark::death(sf::Texture& _texture)
+{
+	body.setTexture(_texture);
+	animation.Init(&_texture, sf::Vector2u(20, 1), 0.1f);
+	body.move(0, 0);
+}

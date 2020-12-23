@@ -10,6 +10,7 @@ GameState::~GameState()
 
 void GameState::Init(sf::RenderWindow& _window)
 {
+	point = 0;
 	if (!_texture.loadFromFile(Game_State_BG_Filepath))
 	{
 		std::cout << "Failed To Open File" << std::endl;
@@ -29,17 +30,26 @@ void GameState::Init(sf::RenderWindow& _window)
 	if (!_font.loadFromFile(Main_Menu_Font_Filepath)) {
 		std::cout << "Failed To Open File" << std::endl;
 	}
-	SpawnShark(4);
+	SpawnShark(5);
+	diver.setpos(0, _window.getSize().y / 2 - diver.getHeight() / 2);
 	sharks.viewValue();
+	//point string
+	point_txt.setFont(_font);
+	point_txt.setString(to_string(point));
+	point_txt.setCharacterSize(30);
+	point_txt.setFillColor(sf::Color(255, 255, 255, 255));
+	point_txt.setOutlineThickness(1);
+	point_txt.setOutlineColor(sf::Color::Black);
+	point_txt.setPosition(5, 5);
+	//input string
 	input_str = "";
 	input_text.setFont(_font);
 	input_text.setString(input_str);
-	input_text.setCharacterSize(22);
+	input_text.setCharacterSize(34);
 	input_text.setFillColor(sf::Color(255, 255, 255, 255));
 	input_text.setOutlineThickness(1);
 	input_text.setOutlineColor(sf::Color::Black);
-	//input_text.setPosition((_window.getSize().x / 2) - (input_text.getGlobalBounds().width / 2), _window.getSize().y - input_text.getGlobalBounds().width);
-	input_text.setPosition(0, 0);
+	input_text.setPosition(_window.getSize().x / 2 - input_text.getGlobalBounds().width / 2, _window.getSize().y - input_text.getGlobalBounds().height * 2);
 }
 
 void GameState::Input(sf::RenderWindow& _window, sf::Event& _event, std::vector<State*>& _state)
@@ -61,14 +71,16 @@ void GameState::Input(sf::RenderWindow& _window, sf::Event& _event, std::vector<
 				}
 				else
 				{
-					
+					point++;
+					point_txt.setString(to_string(point));
 				}
 				input_str = "";
 				input_text.setString(input_str);
 				std::cout << input_str;
 				_cooldown.restart();
-				sharks.viewValue();
+				input_text.setPosition(_window.getSize().x / 2 - input_text.getGlobalBounds().width / 2, _window.getSize().y - input_text.getGlobalBounds().height * 2);
 			}
+
 		}
 		if(_event.type == sf::Event::TextEntered)
 		{
@@ -86,8 +98,10 @@ void GameState::Input(sf::RenderWindow& _window, sf::Event& _event, std::vector<
 				input_str += toupper(static_cast<char>(_event.text.unicode));
 				input_text.setString(input_str);
 				input_str.erase(std::remove(input_str.begin(), input_str.end(), '\r'), input_str.end());
-			}			
+			}
+			input_text.setPosition(_window.getSize().x / 2 - input_text.getGlobalBounds().width / 2, _window.getSize().y - input_text.getGlobalBounds().height * 2);
 		}
+
 	}
 }
 
@@ -103,16 +117,17 @@ void GameState::Update(sf::RenderWindow& _window, std::vector<State*>& _state) {
 	}
 	if (_spawner.getElapsedTime().asSeconds() > 10)
 	{
-		int amount = rand() % 5;
+		int amount = rand() % 5 + 1;
 		SpawnShark(amount);
 		_spawner.restart();
 	}
 	if (sharks.getSize() <= 0)
 	{
-		SpawnShark(4);
+		SpawnShark(5);
 		_spawner.restart();
 	}
 	sharks.Update();
+	diver.update();
 }
 
 void GameState::Draw(sf::RenderWindow& _window)
@@ -120,7 +135,9 @@ void GameState::Draw(sf::RenderWindow& _window)
 	_window.clear();
 	_window.draw(_sprite);
 	sharks.Draw(_window);
+	diver.draw(_window);
 	_window.draw(input_text);
+	_window.draw(point_txt);
 	_window.display();
 }
 

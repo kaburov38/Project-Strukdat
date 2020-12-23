@@ -6,6 +6,7 @@
 #include "linkedlist.h"
 #include "Animation.h"
 #include "Shark.h"
+#include "player.h"
 class GameState : public State
 {
 public:
@@ -25,8 +26,10 @@ private:
 	float deltatime = 0;
 	sf::Clock _animationtimer, _cooldown, _spawner;
 	sf::Font _font;
-	sf::Text _string, input_text;
+	sf::Text _string, input_text, point_txt;
 	linkedlist sharks;
 	std::string input_str;
+	player diver;
+	int point;
 };
 
