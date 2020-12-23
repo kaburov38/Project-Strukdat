@@ -22,17 +22,14 @@ void GameState::Init(sf::RenderWindow& _window)
 	{
 		std::cout << "Failed To Open File" << std::endl;
 	}
+	if (!_hiu2.loadFromFile(Enemy_2_Sprite_Texture_Filepath))
+	{
+		std::cout << "Failed To Open File" << std::endl;
+	}
 	if (!_font.loadFromFile(Main_Menu_Font_Filepath)) {
 		std::cout << "Failed To Open File" << std::endl;
 	}
-	for (int i = 0; i <= 4; i++)
-	{
-		std::string temp;
-		do{
-			temp = getSharkString();
-			sharks.addvalue(_hiu1, _font, temp, 1, i);
-		} while (sharks.searchWord(temp) == -1);
-	}
+	SpawnShark(4);
 	sharks.viewValue();
 	input_str = "";
 	input_text.setFont(_font);
@@ -58,16 +55,13 @@ void GameState::Input(sf::RenderWindow& _window, sf::Event& _event, std::vector<
 			if (_event.key.code == sf::Keyboard::Enter)
 			{
 				input_str.erase(std::remove(input_str.begin(), input_str.end(), '\r'), input_str.end());
-				int index = sharks.searchWord(input_str);
-				cout << index << endl;
-				std::cout << input_str << std::endl;
-				if (index > -1)
+				if (!sharks.Attack(input_str))
 				{
-					sharks.deleteIndex(index);
+					sharks.Randomize();
 				}
 				else
 				{
-					sharks.Randomize();
+					
 				}
 				input_str = "";
 				input_text.setString(input_str);
@@ -98,6 +92,10 @@ void GameState::Input(sf::RenderWindow& _window, sf::Event& _event, std::vector<
 }
 
 void GameState::Update(sf::RenderWindow& _window, std::vector<State*>& _state) {
+	if (sharks.isGameOver())
+	{
+		std::cout << "Game Over" << std::endl;
+	}
 	if (_cooldown.getElapsedTime().asSeconds() > 10)
 	{
 		sharks.Randomize();
@@ -106,26 +104,12 @@ void GameState::Update(sf::RenderWindow& _window, std::vector<State*>& _state) {
 	if (_spawner.getElapsedTime().asSeconds() > 10)
 	{
 		int amount = rand() % 5;
-		for (int i = 0; i <= amount; i++)
-		{
-			std::string temp;
-			do {
-				temp = getSharkString();
-				sharks.addvalue(_hiu1, _font, temp, 1, i);
-			} while (sharks.searchWord(temp) == -1);
-		}
+		SpawnShark(amount);
 		_spawner.restart();
 	}
 	if (sharks.getSize() <= 0)
 	{
-		for (int i = 0; i <= 4; i++)
-		{
-			std::string temp;
-			do {
-				temp = getSharkString();
-				sharks.addvalue(_hiu1, _font, temp, 1, i);
-			} while (sharks.searchWord(temp) == -1);
-		}
+		SpawnShark(4);
 		_spawner.restart();
 	}
 	sharks.Update();
@@ -138,4 +122,25 @@ void GameState::Draw(sf::RenderWindow& _window)
 	sharks.Draw(_window);
 	_window.draw(input_text);
 	_window.display();
+}
+
+void GameState::SpawnShark(int amount)
+{
+	for (int i = 0; i < amount; i++)
+	{
+		std::string temp;
+		do {
+			int lives = rand() % 2 + 1;
+			temp = getSharkString();
+			if (lives == 1)
+			{
+				sharks.addvalue(_hiu1, _font, temp, 1, i);
+			}
+			else if(lives == 2)
+			{
+				sharks.addvalue(_hiu2, _font, temp, 2, i);
+			}
+
+		} while (sharks.searchWord(temp) == -1);
+	}	
 }

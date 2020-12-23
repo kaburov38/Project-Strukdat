@@ -49,7 +49,7 @@ std::string getSharkString()
 	std::fstream file;
 	std::string word;
 	int line;
-	line = rand() % 16000 + 1;
+	line = rand() % 4000 + 1000;
 	file.open(Word_Bank);
 	for (int i = 0; i < line; i++)
 	{
