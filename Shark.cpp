@@ -58,3 +58,16 @@ void Shark::setString(std::string str)
 	word = str;
 	text.setString(word);
 }
+int Shark::getLives()
+{
+	return lives;
+}
+void Shark::reduceLives()
+{
+	lives--;
+	std::cout << "New Lives : " << lives << std::endl;
+}
+sf::Sprite Shark::GetSprite()
+{
+	return body;
+}

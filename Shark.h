@@ -22,4 +22,7 @@ public:
 	void Draw(sf::RenderWindow& _window);
 	std::string getString();
 	void setString(std::string str);
+	int getLives();
+	void reduceLives();
+	sf::Sprite GetSprite();
 };
