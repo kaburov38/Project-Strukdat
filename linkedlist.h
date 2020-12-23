@@ -29,14 +29,16 @@ public:
 	void Draw(sf::RenderWindow& _window);
 	int getSize();
 	void Randomize();
-	Shark getShark(int index);
+	Shark& getShark(int index);
 	void reduceLives(int index);
-	bool Attack(std::string word);
+	bool Attack(std::string word, sf::Texture& _boneshark, sf::Texture& _boneshark2);
 	bool isGameOver();
 
 private:
 	Node* head;
 	Node* tail;
 	int size;
+	sf::Sound _sharkhit, _sharkdies;
+	sf::SoundBuffer sharkhit_sb, sharkdies_sb;
 };
 

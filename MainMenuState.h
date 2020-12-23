@@ -5,6 +5,7 @@
 #include "State.h"
 #include "Additional.h"
 #include "GameState.h"
+#include "TutorialState.h"
 class MainMenuState : public State
 {
 public:

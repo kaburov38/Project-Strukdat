@@ -1,5 +1,6 @@
 #pragma once
 #include<SFML/Graphics.hpp>
+#include<SFML/Audio.hpp>
 #include "Definition.h"
 #include "Animation.h"
 #include <time.h>
@@ -10,7 +11,9 @@ private:
 	std::string word;
 	sf::Sprite body; //shark
 	sf::Text text;
-	int lives;
+	sf::Clock _deathtimer;
+	bool isdeath;
+	int lives, _type;
 	float datatime = 0;
 	sf::Clock clock;
 	Animation animation;
@@ -26,4 +29,6 @@ public:
 	void reduceLives();
 	sf::Sprite GetSprite();
 	void death(sf::Texture& _texture);
+	int getType();
+	bool isDeath();
 };

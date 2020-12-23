@@ -16,6 +16,7 @@ void MainMenuState::Init(sf::RenderWindow& _window)
 		std::cout << "Failed to Open File" << std::endl;
 	}
 	_music.setLoop(true);
+	_music.setVolume(30);
 	_music.play();
 	if (!_texture.loadFromFile(Main_Menu_State_BG_Filepath))
 	{
@@ -102,7 +103,7 @@ void MainMenuState::Input(sf::RenderWindow& _window, sf::Event& _event, std::vec
 		if (IsTextClicked(_tutorial, sf::Mouse::Left, _window))
 		{
 			_music.stop();
-			_state.push_back(new MainMenuState);
+			_state.push_back(new TutorialState);
 			_state.back()->Init(_window);
 		}
 		if (IsTextClicked(_exit, sf::Mouse::Left, _window))

@@ -1,5 +1,6 @@
 #pragma once
 #include<SFML/Graphics.hpp>
+#include<SFML/Audio.hpp>
 #include "Definition.h"
 #include "State.h"
 #include "MainMenuState.h"
@@ -19,17 +20,21 @@ public:
 	void Draw(sf::RenderWindow& _window);
 	void SpawnShark(int amount);
 private:
-	sf::Texture _texture, _hiu1, _hiu2;
+	sf::Texture _texture, _hiu1, _hiu2, _bone1, _bone2;
 	sf::Sprite _sprite;
 	sf::Clock _clock;
 	Animation anim;
 	float deltatime = 0;
-	sf::Clock _animationtimer, _cooldown, _spawner;
+	sf::Clock _animationtimer, _cooldown, _spawner, _gameoverclock;
 	sf::Font _font;
-	sf::Text _string, input_text, point_txt;
+	sf::Text input_text, point_txt, _gameovertext;
 	linkedlist sharks;
 	std::string input_str;
 	player diver;
 	int point;
+	bool isgameover;
+	sf::Music _music;
+	sf::SoundBuffer playerdies_sb, wrong_sb;
+	sf::Sound _playerdies, _wrong;
 };
 

@@ -1,4 +1,5 @@
 #include "GameState.h"
+#include "GameOverState.h"
 #include<iostream>
 GameState::GameState()
 {
@@ -11,6 +12,27 @@ GameState::~GameState()
 void GameState::Init(sf::RenderWindow& _window)
 {
 	point = 0;
+	isgameover = false;
+	if (!_music.openFromFile(Game_Music))
+	{
+		std::cout << "Failed to Open File" << std::endl;
+	}
+	_music.setLoop(true);
+	_music.setVolume(30);
+	_music.play();
+	if (!playerdies_sb.loadFromFile(Player_Dies))
+	{
+		std::cout << "Failed to Open File" << std::endl;
+	}
+	_playerdies.setBuffer(playerdies_sb);
+	_playerdies.setVolume(25);
+	if (!wrong_sb.loadFromFile(Wrong))
+	{
+		std::cout << "Failed to Open File" << std::endl;
+	}
+	_wrong.setBuffer(wrong_sb);
+	_wrong.setVolume(25);
+	
 	if (!_texture.loadFromFile(Game_State_BG_Filepath))
 	{
 		std::cout << "Failed To Open File" << std::endl;
@@ -27,12 +49,19 @@ void GameState::Init(sf::RenderWindow& _window)
 	{
 		std::cout << "Failed To Open File" << std::endl;
 	}
+	if (!_bone1.loadFromFile(Bone_1))
+	{
+		std::cout << "Failed To Open File" << std::endl;
+	}
+	if (!_bone2.loadFromFile(Bone_2))
+	{
+		std::cout << "Failed To Open File" << std::endl;
+	}
 	if (!_font.loadFromFile(Main_Menu_Font_Filepath)) {
 		std::cout << "Failed To Open File" << std::endl;
 	}
 	SpawnShark(5);
 	diver.setpos(0, _window.getSize().y / 2 - diver.getHeight() / 2);
-	sharks.viewValue();
 	//point string
 	point_txt.setFont(_font);
 	point_txt.setString(to_string(point));
@@ -49,7 +78,15 @@ void GameState::Init(sf::RenderWindow& _window)
 	input_text.setFillColor(sf::Color(255, 255, 255, 255));
 	input_text.setOutlineThickness(1);
 	input_text.setOutlineColor(sf::Color::Black);
-	input_text.setPosition(_window.getSize().x / 2 - input_text.getGlobalBounds().width / 2, _window.getSize().y - input_text.getGlobalBounds().height * 2);
+	input_text.setPosition(_window.getSize().x / 2 - input_text.getGlobalBounds().width / 2, _window.getSize().y - (input_text.getGlobalBounds().height * 2));
+	//gameover text
+	_gameovertext.setFont(_font);
+	_gameovertext.setString("Game Over");
+	_gameovertext.setCharacterSize(42);
+	_gameovertext.setFillColor(sf::Color(255, 255, 255, 255));
+	_gameovertext.setOutlineThickness(3);
+	_gameovertext.setOutlineColor(sf::Color::Black);
+	_gameovertext.setPosition((_window.getSize().x / 2) - (_gameovertext.getGlobalBounds().width / 2), (_window.getSize().y / 2) - (_gameovertext.getGlobalBounds().height / 2));
 }
 
 void GameState::Input(sf::RenderWindow& _window, sf::Event& _event, std::vector<State*>& _state)
@@ -60,55 +97,65 @@ void GameState::Input(sf::RenderWindow& _window, sf::Event& _event, std::vector<
 		{
 			_window.close();
 		}
-		if (_event.type == sf::Event::KeyPressed)
+		if (!isgameover)
 		{
-			if (_event.key.code == sf::Keyboard::Enter)
+			if (_event.type == sf::Event::KeyPressed)
 			{
-				input_str.erase(std::remove(input_str.begin(), input_str.end(), '\r'), input_str.end());
-				if (!sharks.Attack(input_str))
+				if (_event.key.code == sf::Keyboard::Enter)
 				{
-					sharks.Randomize();
+					input_str.erase(std::remove(input_str.begin(), input_str.end(), '\r'), input_str.end());
+					if (!sharks.Attack(input_str, _bone1, _bone2))
+					{
+						_wrong.play();
+						sharks.Randomize();
+					}
+					else
+					{
+						point++;
+						point_txt.setString(to_string(point));
+					}
+					input_str = "";
+					input_text.setString(input_str);
+					_cooldown.restart();
+					input_text.setPosition(_window.getSize().x / 2 - input_text.getGlobalBounds().width / 2, _window.getSize().y - input_text.getGlobalBounds().height * 2);
+				}
+
+			}
+			if (_event.type == sf::Event::TextEntered)
+			{
+				if (_event.text.unicode == '\b')
+				{
+					if (input_str.size() > 0)
+					{
+						input_str.erase(input_str.size() - 1, 1);
+						input_text.setString(input_str);
+						input_str.erase(std::remove(input_str.begin(), input_str.end(), '\r'), input_str.end());
+					}
 				}
 				else
 				{
-					point++;
-					point_txt.setString(to_string(point));
-				}
-				input_str = "";
-				input_text.setString(input_str);
-				std::cout << input_str;
-				_cooldown.restart();
-				input_text.setPosition(_window.getSize().x / 2 - input_text.getGlobalBounds().width / 2, _window.getSize().y - input_text.getGlobalBounds().height * 2);
-			}
-
-		}
-		if(_event.type == sf::Event::TextEntered)
-		{
-			if (_event.text.unicode == '\b')
-			{
-				if (input_str.size() > 0)
-				{
-					input_str.erase(input_str.size() - 1, 1);
+					input_str += toupper(static_cast<char>(_event.text.unicode));
 					input_text.setString(input_str);
 					input_str.erase(std::remove(input_str.begin(), input_str.end(), '\r'), input_str.end());
-				}				
+				}
+				input_text.setPosition(_window.getSize().x / 2 - input_text.getGlobalBounds().width / 2, _window.getSize().y - input_text.getGlobalBounds().height * 2);
 			}
-			else
-			{
-				input_str += toupper(static_cast<char>(_event.text.unicode));
-				input_text.setString(input_str);
-				input_str.erase(std::remove(input_str.begin(), input_str.end(), '\r'), input_str.end());
-			}
-			input_text.setPosition(_window.getSize().x / 2 - input_text.getGlobalBounds().width / 2, _window.getSize().y - input_text.getGlobalBounds().height * 2);
 		}
-
 	}
 }
 
 void GameState::Update(sf::RenderWindow& _window, std::vector<State*>& _state) {
-	if (sharks.isGameOver())
+	if (isgameover && _gameoverclock.getElapsedTime().asSeconds() >= Game_Over_Time)
 	{
-		std::cout << "Game Over" << std::endl;
+		_music.stop();
+		_state.push_back(new GameOverState(point));
+		_state.back()->Init(_window);
+	}
+	if (sharks.isGameOver() && !isgameover)
+	{
+		_playerdies.play();
+		isgameover = true;
+		_gameoverclock.restart();
 	}
 	if (_cooldown.getElapsedTime().asSeconds() > 10)
 	{
@@ -136,6 +183,10 @@ void GameState::Draw(sf::RenderWindow& _window)
 	_window.draw(_sprite);
 	sharks.Draw(_window);
 	diver.draw(_window);
+	if (isgameover)
+	{
+		_window.draw(_gameovertext);
+	}
 	_window.draw(input_text);
 	_window.draw(point_txt);
 	_window.display();

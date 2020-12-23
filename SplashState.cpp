@@ -11,7 +11,7 @@ SplashState::~SplashState()
 
 void SplashState::Init(sf::RenderWindow& _window)
 {
-	if (!_texture.loadFromFile("Resources/bg-menu.png"))
+	if (!_texture.loadFromFile(Splash_State_BG_Filepath))
 	{
 		std::cout << "Failed To Open File" << std::endl;
 	}
